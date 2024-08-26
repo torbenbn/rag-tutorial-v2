@@ -2,3 +2,10 @@
 .DS_Store
 backup
 chroma
+lib64
+pyvenv.cfg
+bin/
+lib/
+include/
+share/man/man1/isympy.1
+.env

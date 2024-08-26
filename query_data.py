@@ -1,9 +1,14 @@
 import argparse
-from langchain.vectorstores.chroma import Chroma
+from langchain_chroma import Chroma
 from langchain.prompts import ChatPromptTemplate
 from langchain_community.llms.ollama import Ollama
+from dotenv import load_dotenv
+import os
 
 from get_embedding_function import get_embedding_function
+
+load_dotenv()
+
 
 CHROMA_PATH = "chroma"
 
@@ -40,7 +45,7 @@ def query_rag(query_text: str):
     prompt = prompt_template.format(context=context_text, question=query_text)
     # print(prompt)
 
-    model = Ollama(model="mistral")
+    model = Ollama(model=os.getenv("OLLAMA_MODEL"), base_url=os.getenv("OLLAMA_BASE_URL"))
     response_text = model.invoke(prompt)
 
     sources = [doc.metadata.get("id", None) for doc, _score in results]
